@@ -66,8 +66,8 @@ RUN procs=$(cat /proc/cpuinfo |grep processor | wc -l); sed -i -e "s/worker_proc
 # Set the actual content
 COPY ./site /usr/share/nginx/html/release
 RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-admin wp-admin
-RUN cd /usr/share/nginx/html/release && ln -s ../wp-content wp-content
-RUN cd /usr/share/nginx/html/release && ln -s ../wp-config.php wp-config.php
+RUN cd /usr/share/nginx/html/release && ln -s ../shared/wp-content wp-content
+RUN cd /usr/share/nginx/html/release && ln -s ../shared/wp-config.php wp-config.php
 
 # Always chown webroot for better mounting
 RUN chown -Rf www-data.www-data /usr/share/nginx
