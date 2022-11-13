@@ -42,9 +42,10 @@ RUN set -x \
     && echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d \
     && apt-get autoremove --purge -y \
         software-properties-common \
-        gnupg2 \
-    && apt-get -y clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && apt-get clean autoclean \
+    && apt-get autoremove --yes \
+    && rm -rf /var/lib/{apt,dpkg,cache,log}/
+    
 # make sure run/php exists and is read/write accesible 
 RUN mkdir -p /run/php && chown www-data:www-data /run/php
 # make sure there is a log folder and is read/write accesible 
@@ -63,8 +64,6 @@ COPY nginx/default.conf /etc/nginx/sites-available/default
 # Update nginx to match worker_processes to # of cpu's
 RUN procs=$(cat /proc/cpuinfo |grep processor | wc -l); sed -i -e "s/worker_processes  1/worker_processes $procs/" /etc/nginx/nginx.conf
 # Set the actual content
-VOLUME /usr/share/nginx/html/shared
-WORKDIR /usr/share/nginx/html/release
 COPY ./site /usr/share/nginx/html/release
 RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-admin wp-admin
 RUN cd /usr/share/nginx/html/release && ln -s ../wp-content wp-content
@@ -73,4 +72,7 @@ RUN cd /usr/share/nginx/html/release && ln -s ../wp-config.php wp-config.php
 # Always chown webroot for better mounting
 RUN chown -Rf www-data.www-data /usr/share/nginx
 
+# Exports
 EXPOSE 80
+VOLUME /usr/share/nginx/html/shared
+WORKDIR /usr/share/nginx/html/release
