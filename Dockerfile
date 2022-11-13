@@ -6,6 +6,12 @@ LABEL MANTAINER="Tadeo Armenta <contact@tadeoarmenta.com>"
 ENV DEBIAN_FRONTEND noninteractive
 # At this point is the only one supported by wordpress echosystem
 ENV PHP_VERSION 7.4
+
+# Add php repo
+RUN set -x \
+    && apt-get update \
+    && apt -y install software-properties-common dirmngr apt-transport-https lsb-release ca-certificates \
+    && add-apt-repository ppa:ondrej/php
 # Install Craft Requirements
 RUN set -x \
     && apt-get update \
@@ -49,11 +55,17 @@ RUN mkdir -p /home/ubuntu && chown -R www-data:www-data /home/ubuntu
 RUN rm -rf /usr/share/nginx/html/* && rm -rf /etc/nginx/sites-available/*
 # PHP config
 COPY php /etc/php
+# Entrypoints
 COPY scripts/php.sh /docker-entrypoint.d/
+COPY scripts/entrypoint.sh /docker-entrypoint.d/
 # Nginx config
 COPY nginx/default.conf /etc/nginx/sites-available/default
 # Update nginx to match worker_processes to # of cpu's
 RUN procs=$(cat /proc/cpuinfo |grep processor | wc -l); sed -i -e "s/worker_processes  1/worker_processes $procs/" /etc/nginx/nginx.conf
+# Set the actual content
+VOLUME /usr/share/nginx/html/shared
+WORKDIR /var/www/html/release
+COPY site /usr/share/nginx/html/release
 
 # Always chown webroot for better mounting
 RUN chown -Rf www-data.www-data /usr/share/nginx
