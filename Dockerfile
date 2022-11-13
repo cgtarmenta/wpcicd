@@ -64,8 +64,11 @@ COPY nginx/default.conf /etc/nginx/sites-available/default
 RUN procs=$(cat /proc/cpuinfo |grep processor | wc -l); sed -i -e "s/worker_processes  1/worker_processes $procs/" /etc/nginx/nginx.conf
 # Set the actual content
 VOLUME /usr/share/nginx/html/shared
-WORKDIR /var/www/html/release
-COPY site /usr/share/nginx/html/release
+WORKDIR /usr/share/nginx/html/release
+COPY ./site /usr/share/nginx/html/release
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-admin wp-admin
+RUN cd /usr/share/nginx/html/release && ln -s ../wp-content wp-content
+RUN cd /usr/share/nginx/html/release && ln -s ../wp-config.php wp-config.php
 
 # Always chown webroot for better mounting
 RUN chown -Rf www-data.www-data /usr/share/nginx

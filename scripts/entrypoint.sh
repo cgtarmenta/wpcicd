@@ -4,11 +4,11 @@ set -euo pipefail
 
 MOUNTPOINT=/usr/share/nginx/html
 
-for dir in shared release; do
-    if [[ ! -d $MOUNTPOINT/$dir && -d /wordpress/$dir ]]; then
-        ln -s /wordpress/$dir $MOUNTPOINT/$dir && echo "Linked $MOUNTPOINT/$dir to /wordpress/$dir."
-    fi
-done
+# for dir in shared release; do
+#     if [[ ! -d $MOUNTPOINT/$dir && -d /wordpress/$dir ]]; then
+#         ln -s /wordpress/$dir $MOUNTPOINT/$dir && echo "Linked $MOUNTPOINT/$dir to /wordpress/$dir."
+#     fi
+# done
 
 file_env() {
   local var="$1"
@@ -235,8 +235,10 @@ if [ ! -d $MOUNTPOINT/shared/wp-content ]; then
 fi
 
 # set security
-chmod 640 $MOUNTPOINT/shared/wp-config.php
-chown www-data $MOUNTPOINT/shared/wp-config.php
+if [ -e $MOUNTPOINT/shared/wp-config.php ]; then
+  chmod 640 $MOUNTPOINT/shared/wp-config.php
+  chown www-data $MOUNTPOINT/shared/wp-config.php
+fi
 
 # final cleanup
 rm -f $MOUNTPOINT/shared/sed* || true
