@@ -1,0 +1,8 @@
+# Convert to LF line endings on checkout.
+# Scripts
+*.bash     text eol=lf
+*.fish     text eol=lf
+*.sh       text eol=lf
+*.zsh      text eol=lf
+*.js       text eol=lf
+*.ts       text eol=lf

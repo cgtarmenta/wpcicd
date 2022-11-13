@@ -1,0 +1,12 @@
+{
+  "name": "wpcicd",
+  "version": "1.0.16",
+  "description": "Wordpress CI/CD ready image",
+  "author": "Tadeo Armenta <contact@tadeoarmenta.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build:dev": "yarn version --patch && bash scripts/image-build.sh",
+    "push:dev": "yarn version --patch && bash scripts/image-build.sh -p true"
+  }
+}
