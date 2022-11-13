@@ -1,0 +1,12 @@
+name: wpcid
+on:
+  push:
+    branches: main
+jobs:
+  build-and-deploy:
+    name: Deploy Production
+    runs-on: self-hosted
+    environment: main
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
