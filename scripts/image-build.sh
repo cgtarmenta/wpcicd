@@ -3,8 +3,8 @@
 APP_VERSION=$(node -pe "require('./package.json').version")
 PACKAGE_NAME=$(node -pe "require('./package.json').name")
 RELEASE_DATE=$(date +"%Y/%m/%d")
-DOCKER_REGISTRY="dat30"
-DOCKER_REGISTRY_USER="dat30"
+DOCKER_REGISTRY="tadeoarmenta"
+DOCKER_REGISTRY_USER="tadeoarmenta"
 DOCKER_REGISTRY_PASSWORD=""
 PUSH=false
 
