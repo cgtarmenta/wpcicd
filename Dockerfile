@@ -45,7 +45,7 @@ RUN set -x \
     && apt-get clean autoclean \
     && apt-get autoremove --yes \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
-    
+
 # make sure run/php exists and is read/write accesible 
 RUN mkdir -p /run/php && chown www-data:www-data /run/php
 # make sure there is a log folder and is read/write accesible 
@@ -71,7 +71,10 @@ RUN cd /usr/share/nginx/html/release && ln -s ../wp-config.php wp-config.php
 
 # Always chown webroot for better mounting
 RUN chown -Rf www-data.www-data /usr/share/nginx
-
+# Clean wp themes bloatware (~20mb)
+RUN rm -rf /usr/share/nginx/html/release/wordpress/{twentyeleven,twentyfifteen,twentyfourteen,twentynineteen,twentyseventeen} \ 
+    && rm -rf /usr/share/nginx/html/release/wordpress/{twentysixteen,twentyten,twentythirteen,twentytwelve,twentytwenty,twentytwentyone} \
+    && rm -rf /usr/share/nginx/html/release/wordpress/twentytwentytwo 
 # Exports
 EXPOSE 80
 VOLUME /usr/share/nginx/html/shared
