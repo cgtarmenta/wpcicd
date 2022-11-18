@@ -65,16 +65,32 @@ COPY nginx/default.conf /etc/nginx/sites-available/default
 RUN procs=$(cat /proc/cpuinfo |grep processor | wc -l); sed -i -e "s/worker_processes  1/worker_processes $procs/" /etc/nginx/nginx.conf
 # Set the actual content
 COPY ./site /usr/share/nginx/html/release
+# Clean wp bloatware
+RUN rm -rf /usr/share/nginx/html/release/wordpress/wp-content
+# Link them
 RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-admin wp-admin
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-includes wp-includes
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/index.php index.php
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-activate.php wp-activate.php
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-blog-header.php wp-blog-header.php
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-comments-post.php wp-comments-post.php
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-cron.php wp-cron.php
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-links-opml.php wp-links-opml.php
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-load.php wp-load.php
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-login.php wp-login.php
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-mail.php wp-mail.php
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-settings.php wp-settings.php
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-signup.php wp-signup.php
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-trackback.php wp-trackback.php
+RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/xmlrpc.php xmlrpc.php
+
+# Link external ones
 RUN cd /usr/share/nginx/html/release && ln -s ../shared/wp-content wp-content
 RUN cd /usr/share/nginx/html/release && ln -s ../shared/wp-config.php wp-config.php
 
 # Always chown webroot for better mounting
 RUN chown -Rf www-data.www-data /usr/share/nginx
-# Clean wp themes bloatware (~20mb)
-RUN rm -rf /usr/share/nginx/html/release/wordpress/{twentyeleven,twentyfifteen,twentyfourteen,twentynineteen,twentyseventeen} \ 
-    && rm -rf /usr/share/nginx/html/release/wordpress/{twentysixteen,twentyten,twentythirteen,twentytwelve,twentytwenty,twentytwentyone} \
-    && rm -rf /usr/share/nginx/html/release/wordpress/twentytwentytwo 
+
 # Exports
 EXPOSE 80
 VOLUME /usr/share/nginx/html/shared
