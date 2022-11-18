@@ -64,25 +64,25 @@ COPY nginx/default.conf /etc/nginx/sites-available/default
 # Update nginx to match worker_processes to # of cpu's
 RUN procs=$(cat /proc/cpuinfo |grep processor | wc -l); sed -i -e "s/worker_processes  1/worker_processes $procs/" /etc/nginx/nginx.conf
 # Set the actual content
-COPY ./site /usr/share/nginx/html/release
+COPY ./site/wordpress /usr/share/nginx/html/release
 # Clean wp bloatware
-RUN rm -rf /usr/share/nginx/html/release/wordpress/wp-content
+RUN rm -rf /usr/share/nginx/html/release/wp-content
 # Link them
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-admin wp-admin
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-includes wp-includes
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/index.php index.php
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-activate.php wp-activate.php
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-blog-header.php wp-blog-header.php
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-comments-post.php wp-comments-post.php
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-cron.php wp-cron.php
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-links-opml.php wp-links-opml.php
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-load.php wp-load.php
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-login.php wp-login.php
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-mail.php wp-mail.php
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-settings.php wp-settings.php
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-signup.php wp-signup.php
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-trackback.php wp-trackback.php
-RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/xmlrpc.php xmlrpc.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-admin wp-admin
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-includes wp-includes
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/index.php index.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-activate.php wp-activate.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-blog-header.php wp-blog-header.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-comments-post.php wp-comments-post.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-cron.php wp-cron.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-links-opml.php wp-links-opml.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-load.php wp-load.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-login.php wp-login.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-mail.php wp-mail.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-settings.php wp-settings.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-signup.php wp-signup.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/wp-trackback.php wp-trackback.php
+# RUN cd /usr/share/nginx/html/release && ln -s ./wordpress/xmlrpc.php xmlrpc.php
 
 # Link external ones
 RUN cd /usr/share/nginx/html/release && ln -s ../shared/wp-content wp-content
