@@ -49,7 +49,8 @@ RUN set -x \
 # make sure run/php exists and is read/write accesible 
 RUN mkdir -p /run/php && chown www-data:www-data /run/php
 # make sure there is a log folder and is read/write accesible 
-RUN mkdir -p /usr/share/nginx/logs && chown www-data:www-data /usr/share/nginx/logs && chown www-data:www-data /usr/share/nginx/
+RUN mkdir -p /usr/share/nginx/logs && chown www-data:www-data /usr/share/nginx/logs
+RUN mkdir -p /usr/share/nginx/html/shared/nginx_logs && chown www-data:www-data /usr/share/nginx/html/shared/nginx_logs
 # make sure there is a user folder and is read/write accesible
 RUN mkdir -p /home/ubuntu && chown -R www-data:www-data /home/ubuntu
 # remove default files
