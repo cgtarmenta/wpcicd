@@ -59,8 +59,8 @@ RUN rm -rf /usr/share/nginx/html/* && rm -rf /etc/nginx/sites-available/*
 COPY php /etc/php
 # Entrypoints
 COPY scripts/php.sh /docker-entrypoint.d/
-# COPY scripts/entrypoint.sh /docker-entrypoint.d/
 # Nginx config
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/default.conf /etc/nginx/sites-available/default
 # Update nginx to match worker_processes to # of cpu's
 RUN procs=$(cat /proc/cpuinfo |grep processor | wc -l); sed -i -e "s/worker_processes  1/worker_processes $procs/" /etc/nginx/nginx.conf
