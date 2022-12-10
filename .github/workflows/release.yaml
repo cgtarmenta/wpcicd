@@ -20,9 +20,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: tadeoarmenta/wpcicd:$GITHUB_REF_SLUG
+          tags: tadeoarmenta/wpcicd:${{ env.GITHUB_HEAD_REF_SLUG }}
