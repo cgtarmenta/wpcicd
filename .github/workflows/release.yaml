@@ -6,7 +6,7 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 5
     environment: main
     steps:
       - name: Checkout
