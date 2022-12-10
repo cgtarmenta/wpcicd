@@ -124,6 +124,7 @@ RUN cd /usr/share/nginx/html/release && ln -s ../shared/wp-config.php wp-config.
 RUN chown -Rf www-data.www-data /usr/share/nginx
 # work entrypoints
 COPY scripts/docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 RUN mkdir -p /docker-entrypoint.d
 COPY scripts/30-tune-worker-processes.sh /docker-entrypoint.d
 

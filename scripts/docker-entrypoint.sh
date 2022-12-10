@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/sh
+# vim:sw=4:ts=4:et
+
 set -Eeuo pipefail
 
 if [ "$1" = 'php-fpm' ]; then
