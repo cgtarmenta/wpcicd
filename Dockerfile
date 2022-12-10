@@ -98,6 +98,7 @@ RUN { \
 # # PHP config
 RUN mkdir -p /run/php && chown www-data:www-data /run/php
 COPY php/www.conf /usr/local/etc/php-fpm.d/www.conf
+RUN rm /usr/local/etc/php-fpm.d/zz-docker.conf
 
 # # make sure there is a log folder and is read/write accesible 
 RUN mkdir -p /usr/share/nginx/logs && chown www-data:www-data /usr/share/nginx/logs
@@ -109,8 +110,6 @@ RUN mkdir -p /home/ubuntu && chown -R www-data:www-data /home/ubuntu
 # RUN mkdir -p /etc/nginx/{'modules-enabled','conf.d','sites-enabled'}
 # COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/default.conf /etc/nginx/http.d/default.conf
-# # Update nginx to match worker_processes to # of cpu's
-RUN procs=$(cat /proc/cpuinfo |grep processor | wc -l); sed -i -e "s/worker_processes  1/worker_processes $procs/" /etc/nginx/nginx.conf
 # # Set the actual content
 COPY ./site/wordpress /usr/share/nginx/html/release
 # # Clean wp bloatware
