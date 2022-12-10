@@ -131,6 +131,6 @@ EXPOSE 80
 VOLUME /usr/share/nginx/html/shared
 WORKDIR /usr/share/nginx/html/release
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD ["/bin/bash", "-c", "php-fpm & nginx -g 'daemon off;'"]
