@@ -127,7 +127,7 @@ COPY scripts/docker-entrypoint.sh /
 RUN mkdir -p /docker-entrypoint.d
 COPY scripts/30-tune-worker-processes.sh /docker-entrypoint.d
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["/bin/bash", "-c", "php-fpm & nginx -g 'daemon off;'"]
 
