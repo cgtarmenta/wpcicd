@@ -118,6 +118,7 @@ RUN rm -rf /usr/share/nginx/html/release/wp-content
 # Link external ones
 RUN cd /usr/share/nginx/html/release && ln -s ../shared/wp-content wp-content
 RUN cd /usr/share/nginx/html/release && ln -s ../shared/wp-config.php wp-config.php
+RUN cd /usr/share/nginx/html/release && ln -s ../shared/robots.txt robots.txt
 
 # Always chown webroot for better mounting
 RUN chown -Rf www-data.www-data /usr/share/nginx
