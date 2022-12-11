@@ -2,7 +2,7 @@ name: wpcid-release
 on:
   push:
     branches:
-      - 'release/**'
+      - 'feature/**'
 jobs:
   docker:
     runs-on: ubuntu-latest
