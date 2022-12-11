@@ -1,6 +1,6 @@
 {
   "name": "wpcicd",
-  "version": "1.0.72",
+  "version": "1.0.73",
   "description": "Wordpress CI/CD ready image",
   "author": "Tadeo Armenta <contact@tadeoarmenta.com>",
   "license": "MIT",
