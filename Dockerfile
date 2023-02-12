@@ -74,6 +74,7 @@ RUN cd /usr/share/nginx/html/release && ln -s ../shared/wp-content wp-content
 RUN cd /usr/share/nginx/html/release && ln -s ../shared/wp-config.php wp-config.php
 RUN cd /usr/share/nginx/html/release && ln -s ../shared/robots.txt robots.txt
 # Link nginx extra config
+RUN mkdir -p /etc/nginx/conf.d
 RUN ln -s /usr/share/nginx/html/shared/nginx_extra.conf /etc/nginx/conf.d/extra.conf
 
 # Always chown webroot for better mounting
